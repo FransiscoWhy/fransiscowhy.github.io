@@ -3,211 +3,304 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Halaman HTML Random</title>
-  <meta name="description" content="Sebuah halaman HTML yang menghasilkan konten acak: warna, layout, quote, kartu, pola emoji, dan lain-lain." />
+  <title>Portofolio – Nama Anda</title>
+  <meta name="description" content="Template portofolio satu file: hero, tentang, skill, proyek, pengalaman, kontak." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: hsl(210, 40%, 98%);
-      --fg: hsl(222, 47%, 11%);
-      --muted: hsl(210, 16%, 90%);
-      --accent: hsl(250, 90%, 60%);
+      --bg: hsl(220 25% 98%);
+      --fg: hsl(220 20% 12%);
+      --muted: hsl(220 20% 35% / .7);
       --card: #fff;
+      --acc: hsl(255 85% 60%);
+      --ring: hsl(255 85% 60% / .25);
+    }
+    [data-theme="dark"] {
+      --bg: hsl(222 15% 10%);
+      --fg: hsl(0 0% 96%);
+      --muted: hsl(220 20% 80% / .7);
+      --card: hsl(222 15% 14%);
+      --acc: hsl(200 90% 60%);
+      --ring: hsl(200 90% 60% / .25);
     }
     * { box-sizing: border-box; }
     html, body { height: 100%; }
     body {
-      margin: 0;
-      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Helvetica Neue", sans-serif;
-      color: var(--fg);
-      background: radial-gradient(1200px 800px at var(--gx, 40%) var(--gy, 20%), color-mix(in oklab, var(--accent), white 80%), var(--bg));
-      transition: background .5s ease;
+      margin: 0; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Helvetica Neue", sans-serif;
+      color: var(--fg); background: var(--bg);
     }
-    header {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 16px;
-      padding: clamp(16px, 3vw, 32px);
-      align-items: center;
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    .container { width: min(1100px, 92%); margin-inline: auto; }
+    .nav {
+      position: sticky; top: 0; z-index: 20; backdrop-filter: blur(8px);
+      background: color-mix(in oklab, var(--bg), transparent 10%);
+      border-bottom: 1px solid color-mix(in oklab, var(--fg), #000 95% / 10%);
     }
-    .title {
-      display: flex; flex-wrap: wrap; gap: 10px; align-items: baseline;
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; }
+    .brand { font-weight: 800; letter-spacing: -0.02em; }
+    .menu { display: flex; gap: clamp(8px, 3vw, 18px); }
+    .menu a { opacity: .85; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px; border: 1px solid color-mix(in oklab, var(--acc), #000 90% / 35%);
+      background: var(--acc); color: #fff; padding: 10px 14px; border-radius: 12px; font-weight: 700;
+      box-shadow: 0 8px 24px var(--ring);
     }
-    h1 { margin: 0; font-size: clamp(28px, 5vw, 48px); letter-spacing: -0.02em; }
-    .date { opacity: .7; font-weight: 600; }
-    .actions { display: flex; gap: 8px; flex-wrap: wrap; }
-    button {
-      border: none; cursor: pointer; padding: 10px 14px; border-radius: 14px; font-weight: 600;
-      background: var(--accent); color: white; box-shadow: 0 6px 24px color-mix(in oklab, var(--accent), black 80% / 12%);
-      transition: transform .06s ease, box-shadow .2s ease, background .2s ease;
+    .btn.ghost { background: transparent; color: var(--fg); border-color: color-mix(in oklab, var(--fg), #000 95% / 20%); box-shadow: none; }
+    .hero {
+      display: grid; grid-template-columns: 1.2fr .8fr; gap: 28px; align-items: center; padding: 48px 0 24px;
     }
-    button.secondary { background: var(--muted); color: #111; }
-    button:hover { transform: translateY(-1px); }
-    main { padding: 0 clamp(16px, 3vw, 32px) clamp(24px, 4vw, 48px); }
-    .grid {
-      display: grid; gap: clamp(12px, 2vw, 18px);
-      grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
+    .title { font-size: clamp(28px, 5vw, 56px); letter-spacing: -0.03em; margin: 0 0 12px; }
+    .lead { font-size: clamp(16px, 2.2vw, 20px); color: var(--muted); margin: 0 0 18px; }
+    .badge { display:inline-block; padding:6px 10px; border-radius:999px; background: color-mix(in oklab, var(--acc), white 82%); color:#111; font-weight:700; font-size:12px; }
+    .avatar {
+      border-radius: 18px; overflow: hidden; aspect-ratio: 1/1; border: 1px solid color-mix(in oklab, var(--fg), #000 95% / 10%);
     }
-    .card {
-      background: var(--card); border-radius: 18px; padding: 16px; box-shadow: 0 6px 28px rgba(0,0,0,.08);
-      border: 1px solid color-mix(in oklab, var(--accent), #000 95% / 8%);
+    .grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+    .section { padding: 32px 0; }
+    .section h2 { margin: 0 0 12px; font-size: clamp(22px, 3.2vw, 28px); }
+    .muted { color: var(--muted); }
+    .card { background: var(--card); border: 1px solid color-mix(in oklab, var(--fg), #000 95% / 10%); border-radius: 16px; padding: 16px; }
+    .skill { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .meter { width: 52%; height: 10px; background: color-mix(in oklab, var(--fg), #000 95% / 10%); border-radius: 999px; overflow: hidden; }
+    .meter > i { display:block; height: 100%; background: var(--acc); width: 70%; }
+    .tags { display:flex; gap:8px; flex-wrap:wrap; }
+    .tag { font: 600 12px/1 Inter, sans-serif; padding: 6px 10px; border-radius: 999px; background: color-mix(in oklab, var(--acc), white 80%); color:#111; }
+    .proj { display:flex; flex-direction: column; gap:10px; }
+    .proj .thumb { border-radius: 12px; aspect-ratio: 16/10; background: linear-gradient(135deg, var(--acc), transparent),
+                   linear-gradient(180deg, color-mix(in oklab, var(--bg), #000 92% / 8%), var(--card)); border: 1px solid color-mix(in oklab, var(--fg), #000 95% / 12%); }
+    .proj h3 { margin: 0; font-size: 18px; }
+    .proj p { margin: 0; color: var(--muted); }
+    .timeline { position: relative; }
+    .timeline::before { content:""; position:absolute; left: 10px; top: 0; bottom: 0; width: 2px; background: color-mix(in oklab, var(--fg), #000 95% / 15%); }
+    .tl-item { position: relative; padding-left: 28px; margin-bottom: 16px; }
+    .tl-item::before { content:""; position:absolute; left: 4px; top: 6px; width: 14px; height: 14px; border-radius: 999px; background: var(--acc); box-shadow: 0 0 0 4px var(--ring); }
+    .contact { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .field { display:flex; flex-direction:column; gap:8px; }
+    input, textarea { border-radius: 12px; border: 1px solid color-mix(in oklab, var(--fg), #000 95% / 18%); background: var(--card); color: var(--fg); padding: 12px 14px; font: 400 14px/1.5 Inter, sans-serif; }
+    textarea { min-height: 120px; }
+    .footer { text-align:center; padding: 28px 0; color: var(--muted); font-size: 14px; }
+    .row { display:flex; gap:10px; align-items:center; flex-wrap: wrap; }
+    .mono { font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; }
+    .sp { display:flex; gap:8px; align-items:center; }
+    .sp a { display:grid; place-items:center; width:36px; height:36px; border-radius:9px; border:1px solid color-mix(in oklab, var(--fg), #000 95% / 16%); }
+
+    @media (max-width: 840px) {
+      .hero { grid-template-columns: 1fr; }
+      .contact { grid-template-columns: 1fr; }
     }
-    .card h3 { margin: 0 0 8px; font-size: 18px; }
-    .muted { opacity: .75; }
-    .chip { display: inline-block; padding: 6px 10px; border-radius: 999px; background: color-mix(in oklab, var(--accent), white 78%); color: #111; font-weight: 600; font-size: 12px; }
-    .quote { font-size: clamp(18px, 2.5vw, 22px); line-height: 1.6; }
-    .emoji-wall { font-size: clamp(20px, 4.5vw, 40px); line-height: 1.2; }
-    footer { text-align: center; padding: 28px; opacity: .6; }
-    .kbd { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size: 12px; background: #111; color: #fff; padding: 3px 7px; border-radius: 6px; }
-    .hidden { display: none; }
   </style>
 </head>
 <body>
-  <header>
-    <div class="title">
-      <h1 id="headline">Halaman Random</h1>
-      <span class="chip" id="chip">Fresh</span>
-      <span class="date" id="date"></span>
+  <nav class="nav">
+    <div class="container nav-inner">
+      <div class="row">
+        <span class="brand">Nama Anda</span>
+        <span class="badge mono" id="role">Frontend · 2025</span>
+      </div>
+      <div class="row">
+        <div class="menu mono">
+          <a href="#about">Tentang</a>
+          <a href="#skills">Skill</a>
+          <a href="#projects">Proyek</a>
+          <a href="#experience">Pengalaman</a>
+          <a href="#contact">Kontak</a>
+        </div>
+        <button id="themeBtn" class="btn ghost" title="Ganti tema">🌓</button>
+      </div>
     </div>
-    <div class="actions">
-      <button id="btnRandom">Acak Semua ✨</button>
-      <button class="secondary" id="btnShuffle">Acak Kartu 🔀</button>
-      <button class="secondary" id="btnDownload" title="Unduh file HTML ini">Unduh HTML ⤓</button>
+  </nav>
+
+  <header class="container hero">
+    <div>
+      <h1 class="title">Halo, saya <span style="color:var(--acc)">Nama Anda</span> 👋</h1>
+      <p class="lead">Saya seorang <strong>Frontend Developer</strong> yang hobi membangun antarmuka web cepat, bersih, dan accessible. Saya suka Typescript, React, dan CSS modern.</p>
+      <div class="row" style="margin:18px 0 22px;">
+        <a class="btn" href="#projects">Lihat Proyek</a>
+        <a class="btn ghost" href="./CV_NamaAnda.pdf" download>Unduh CV</a>
+        <div class="sp" aria-label="Sosial">
+          <a href="https://github.com/username" aria-label="GitHub">🐙</a>
+          <a href="https://www.linkedin.com/in/username" aria-label="LinkedIn">in</a>
+          <a href="mailto:email@contoh.com" aria-label="Email">✉️</a>
+        </div>
+      </div>
+      <p class="mono">📍 Kota, Indonesia · ✉️ email@contoh.com · 🔗 www.domainanda.com</p>
+    </div>
+    <div class="avatar">
+      <!-- Ganti src dengan foto Anda -->
+      <img src="https://images.unsplash.com/photo-1527980965255-d3b416303d12?q=80&w=800&auto=format&fit=crop" alt="Foto profil" />
     </div>
   </header>
 
-  <main>
-    <section class="card" id="quoteCard">
-      <h3>Quote Hari Ini</h3>
-      <p class="quote" id="quoteText">…</p>
-      <p class="muted" id="quoteBy"></p>
-    </section>
+  <section id="about" class="section container">
+    <h2>Tentang</h2>
+    <p class="muted">Saya memiliki ketertarikan pada desain sistem, aksesibilitas, dan developer experience. Di waktu luang saya membuat komponen open-source, menulis catatan teknis, dan bereksperimen dengan animasi mikro yang menyenangkan.</p>
+  </section>
 
-    <div class="grid" id="cards"></div>
+  <section id="skills" class="section container">
+    <h2>Skill</h2>
+    <div class="grid">
+      <div class="card skill"><strong>JavaScript/TypeScript</strong><span class="meter"><i style="width:88%"></i></span></div>
+      <div class="card skill"><strong>React</strong><span class="meter"><i style="width:84%"></i></span></div>
+      <div class="card skill"><strong>CSS (Flex/Grid)</strong><span class="meter"><i style="width:86%"></i></span></div>
+      <div class="card skill"><strong>Node/Express</strong><span class="meter"><i style="width:70%"></i></span></div>
+      <div class="card skill"><strong>Testing</strong><span class="meter"><i style="width:65%"></i></span></div>
+      <div class="card skill"><strong>UI/UX</strong><span class="meter"><i style="width:72%"></i></span></div>
+    </div>
+    <p class="mono" style="margin-top:10px">Teknologi: <span class="tags">
+      <span class="tag">React</span><span class="tag">Next.js</span><span class="tag">Tailwind</span><span class="tag">Vite</span><span class="tag">Framer Motion</span><span class="tag">REST</span><span class="tag">GraphQL</span>
+    </span></p>
+  </section>
 
-    <section class="card">
-      <h3>Pola Emoji</h3>
-      <div class="emoji-wall" id="emojiWall">🌈✨🎲</div>
-      <p class="muted">Tekan <span class="kbd">A</span> untuk acak cepat, <span class="kbd">S</span> untuk acak kartu.</p>
-    </section>
-  </main>
+  <section id="projects" class="section container">
+    <h2>Proyek</h2>
+    <div class="grid" id="projectGrid">
+      <!-- Proyek 1 -->
+      <article class="card proj" data-tags="react ui">
+        <div class="thumb"></div>
+        <h3>UI Component Kit</h3>
+        <p>Perpustakaan komponen ringan untuk dashboard enterprise. Fokus pada aksesibilitas dan theming.</p>
+        <div class="tags"><span class="tag">React</span><span class="tag">TypeScript</span><span class="tag">Storybook</span></div>
+        <div class="row">
+          <a class="btn" href="#">Demo</a>
+          <a class="btn ghost" href="#">Kode</a>
+        </div>
+      </article>
+      <!-- Proyek 2 -->
+      <article class="card proj" data-tags="nextjs ai">
+        <div class="thumb"></div>
+        <h3>AI Notes</h3>
+        <p>Aplikasi catatan dengan pencarian semantik dan ringkas otomatis. Deploy di Vercel.</p>
+        <div class="tags"><span class="tag">Next.js</span><span class="tag">Embeddings</span><span class="tag">Vercel</span></div>
+        <div class="row">
+          <a class="btn" href="#">Demo</a>
+          <a class="btn ghost" href="#">Kode</a>
+        </div>
+      </article>
+      <!-- Proyek 3 -->
+      <article class="card proj" data-tags="python data">
+        <div class="thumb"></div>
+        <h3>Data Viz Toolkit</h3>
+        <p>Toolkit visualisasi data untuk tim riset internal, dengan preset chart dan dokumentasi.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">Pandas</span><span class="tag">D3</span></div>
+        <div class="row">
+          <a class="btn" href="#">Demo</a>
+          <a class="btn ghost" href="#">Kode</a>
+        </div>
+      </article>
+    </div>
+    <div class="row" style="margin-top:10px">
+      <span class="mono">Filter:</span>
+      <div class="tags" id="filters">
+        <button class="tag" data-filter="all">Semua</button>
+        <button class="tag" data-filter="react">React</button>
+        <button class="tag" data-filter="nextjs">Next.js</button>
+        <button class="tag" data-filter="python">Python</button>
+        <button class="tag" data-filter="ai">AI</button>
+        <button class="tag" data-filter="data">Data</button>
+      </div>
+    </div>
+  </section>
 
-  <footer>Made with ♥ · Dibuat acak di sisi klien · Tidak butuh server</footer>
+  <section id="experience" class="section container">
+    <h2>Pengalaman</h2>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="row" style="justify-content: space-between;">
+          <strong>Frontend Engineer – PT Contoh Teknologi</strong>
+          <span class="mono">2023 – Sekarang</span>
+        </div>
+        <p class="muted">Mendesain ulang design system, menurunkan bundle 32% dan mempercepat TTI 28%.</p>
+      </div>
+      <div class="tl-item">
+        <div class="row" style="justify-content: space-between;">
+          <strong>UI Developer – Studio Kreatif</strong>
+          <span class="mono">2021 – 2023</span>
+        </div>
+        <p class="muted">Membangun 20+ landing page performa tinggi dan A/B testing komponen utama.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="section container">
+    <h2>Kontak</h2>
+    <form class="card contact" onsubmit="event.preventDefault(); alert('Terima kasih! Pesan terkirim (simulasi).');">
+      <div class="field">
+        <label>Nama</label>
+        <input required placeholder="Nama lengkap" />
+      </div>
+      <div class="field">
+        <label>Email</label>
+        <input type="email" required placeholder="alamat@email.com" />
+      </div>
+      <div class="field" style="grid-column:1/-1">
+        <label>Pesan</label>
+        <textarea required placeholder="Tulis pesan Anda…"></textarea>
+      </div>
+      <div style="grid-column:1/-1; display:flex; gap:10px; justify-content:flex-end;">
+        <button class="btn ghost" type="reset">Reset</button>
+        <button class="btn" type="submit">Kirim</button>
+      </div>
+    </form>
+  </section>
+
+  <footer class="footer container">
+    © <span id="year"></span> Nama Anda · Dibangun dengan HTML/CSS/JS · 💙
+  </footer>
 
   <script>
-    const nouns = ["Halaman", "Proyek", "Eksperimen", "Ide", "Sketsa", "Kanvas", "Notebook", "Galaksi", "Dimensi", "Playlist"];
-    const adjectives = ["Random", "Aneh", "Unik", "Cepat", "Nyeleneh", "Elegan", "Santai", "Minimalis", "Futuristik", "Eksotis"];
-    const tags = ["#javascript", "#html", "#css", "#random", "#indonesia", "#today", "#fun", "#design", "#dev", "#creative"];
-    const quotes = [
-      ["Keberuntungan adalah ketika persiapan bertemu kesempatan.", "Seneca"],
-      ["Sederhana itu sulit, rumit itu mudah.", "Anonymous"],
-      ["Kemajuan terjadi di luar zona nyaman.", "Neil Strauss"],
-      ["Konsistensi mengalahkan motivasi.", "Anon"],
-      ["Belajar paling cepat adalah dengan membuat kesalahan.", "Anon"],
-      ["Jangan menunggu sempurna, mulai saja.", "Anon"]
-    ];
-    const emojis = ["✨", "⚡", "🔥", "🍀", "🎲", "🎯", "🌈", "🌿", "🪄", "💡", "🚀", "🧩", "🎨", "🔮"];
-
-    const $ = sel => document.querySelector(sel);
-    const $$ = sel => Array.from(document.querySelectorAll(sel));
-
-    function randInt(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
-    function sample(arr) { return arr[randInt(0, arr.length - 1)]; }
-    function shuffle(arr) { return [...arr].sort(() => Math.random() - 0.5); }
-
-    function randomColor() {
-      const h = randInt(0, 359);
-      const s = randInt(55, 95);
-      const l = randInt(45, 65);
-      return `hsl(${h} ${s}% ${l}%)`;
-    }
-
-    function setTheme() {
-      const accent = randomColor();
-      document.documentElement.style.setProperty('--accent', accent);
-      document.documentElement.style.setProperty('--gx', `${randInt(20, 80)}%`);
-      document.documentElement.style.setProperty('--gy', `${randInt(10, 70)}%`);
-    }
-
-    function setHeadline() {
-      const n = sample(nouns);
-      const a = sample(adjectives);
-      $('#headline').textContent = `${n} ${a}`;
-      $('#chip').textContent = sample(tags);
-    }
-
-    function setDate() {
-      const now = new Date();
-      const opts = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-      $('#date').textContent = '· ' + now.toLocaleDateString('id-ID', opts);
-    }
-
-    function setQuote() {
-      const [text, by] = sample(quotes);
-      $('#quoteText').textContent = '“' + text + '”';
-      $('#quoteBy').textContent = '— ' + by;
-    }
-
-    function makeCard(i) {
-      const el = document.createElement('article');
-      el.className = 'card';
-      const title = `${sample(["Catatan", "Kartu", "Widget", "Blok", "Panel"]) } #${i+1}`;
-      const desc = shuffle(["Lorem ipsum dolor sit amet, consectetur adipiscing elit.", "Dibuat otomatis dengan JavaScript.", "Klik tombol untuk mengacak.", "Desain responsif dan ringan.", "Tidak menyimpan data pribadi.", "Cocok untuk boilerplate."]).slice(0, randInt(2, 4)).join(' ');
-      el.innerHTML = `
-        <h3>${title}</h3>
-        <p class="muted">${desc}</p>
-        <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:8px;">
-          ${shuffle(tags).slice(0, randInt(2,4)).map(t => `<span class="chip">${t}</span>`).join('')}
-        </div>
-      `;
-      return el;
-    }
-
-    function buildCards() {
-      const wrap = $('#cards');
-      wrap.innerHTML = '';
-      const count = randInt(6, 10);
-      for (let i = 0; i < count; i++) wrap.appendChild(makeCard(i));
-    }
-
-    function setEmojiWall() {
-      const rows = randInt(3, 6);
-      const cols = randInt(8, 14);
-      let out = '';
-      for (let r = 0; r < rows; r++) {
-        const line = Array.from({length: cols}, () => sample(emojis)).join(' ');
-        out += line + (r < rows-1 ? "\n" : "");
-      }
-      $('#emojiWall').textContent = out;
-    }
-
-    function downloadSelf() {
-      const html = '<!doctype html>\n' + document.documentElement.outerHTML;
-      const blob = new Blob([html], { type: 'text/html' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url; a.download = 'halaman-random.html';
-      document.body.appendChild(a); a.click(); a.remove();
-      setTimeout(() => URL.revokeObjectURL(url), 1000);
-    }
-
-    function randomizeAll() {
-      setTheme(); setHeadline(); setQuote(); buildCards(); setEmojiWall();
-    }
-
-    // Events
-    $('#btnRandom').addEventListener('click', randomizeAll);
-    $('#btnShuffle').addEventListener('click', () => { buildCards(); setEmojiWall(); });
-    $('#btnDownload').addEventListener('click', downloadSelf);
-    document.addEventListener('keydown', (e) => {
-      if (e.key.toLowerCase() === 'a') randomizeAll();
-      if (e.key.toLowerCase() === 's') { buildCards(); setEmojiWall(); }
+    // Tema
+    const themeBtn = document.getElementById('themeBtn');
+    const root = document.documentElement;
+    const saved = localStorage.getItem('theme');
+    if (saved) document.body.setAttribute('data-theme', saved);
+    themeBtn.addEventListener('click', () => {
+      const cur = document.body.getAttribute('data-theme');
+      const next = cur === 'dark' ? '' : 'dark';
+      if (next) document.body.setAttribute('data-theme', next); else document.body.removeAttribute('data-theme');
+      localStorage.setItem('theme', next);
     });
 
-    // init
-    setDate(); randomizeAll();
+    // Tahun footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Filter proyek sederhana
+    const filters = document.getElementById('filters');
+    const items = Array.from(document.querySelectorAll('#projectGrid .proj'));
+    filters.addEventListener('click', (e) => {
+      if (!(e.target instanceof HTMLElement)) return;
+      const f = e.target.dataset.filter; if (!f) return;
+      items.forEach(it => {
+        if (f === 'all') { it.style.display = ''; return; }
+        const tags = (it.getAttribute('data-tags') || '').split(/\s+/);
+        it.style.display = tags.includes(f) ? '' : 'none';
+      });
+    });
+
+    // Helper: ganti placeholder cepat (opsional)
+    // Ubah nilai di bawah untuk mempersonalisasi cepat.
+    const PROFILE = {
+      name: 'Nama Anda',
+      role: 'Frontend Developer',
+      city: 'Kota, Indonesia',
+      email: 'email@contoh.com',
+      site: 'www.domainanda.com',
+      socials: {
+        github: 'https://github.com/username',
+        linkedin: 'https://www.linkedin.com/in/username',
+        email: 'mailto:email@contoh.com'
+      }
+    };
+    document.title = `Portofolio – ${PROFILE.name}`;
+    document.querySelector('.brand').textContent = PROFILE.name;
+    document.getElementById('role').textContent = `${PROFILE.role} · ${new Date().getFullYear()}`;
+    document.querySelector('header .title').innerHTML = `Halo, saya <span style="color:var(--acc)">${PROFILE.name}</span> 👋`;
+    document.querySelector('header .mono').textContent = `📍 ${PROFILE.city} · ✉️ ${PROFILE.email} · 🔗 ${PROFILE.site}`;
+    document.querySelector('.sp a[aria-label="GitHub"]').href = PROFILE.socials.github;
+    document.querySelector('.sp a[aria-label="LinkedIn"]').href = PROFILE.socials.linkedin;
+    document.querySelector('.sp a[aria-label="Email"]').href = PROFILE.socials.email;
   </script>
 </body>
 </html>
