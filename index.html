@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Halaman HTML Random</title>
+  <meta name="description" content="Sebuah halaman HTML yang menghasilkan konten acak: warna, layout, quote, kartu, pola emoji, dan lain-lain." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: hsl(210, 40%, 98%);
+      --fg: hsl(222, 47%, 11%);
+      --muted: hsl(210, 16%, 90%);
+      --accent: hsl(250, 90%, 60%);
+      --card: #fff;
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Helvetica Neue", sans-serif;
+      color: var(--fg);
+      background: radial-gradient(1200px 800px at var(--gx, 40%) var(--gy, 20%), color-mix(in oklab, var(--accent), white 80%), var(--bg));
+      transition: background .5s ease;
+    }
+    header {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 16px;
+      padding: clamp(16px, 3vw, 32px);
+      align-items: center;
+    }
+    .title {
+      display: flex; flex-wrap: wrap; gap: 10px; align-items: baseline;
+    }
+    h1 { margin: 0; font-size: clamp(28px, 5vw, 48px); letter-spacing: -0.02em; }
+    .date { opacity: .7; font-weight: 600; }
+    .actions { display: flex; gap: 8px; flex-wrap: wrap; }
+    button {
+      border: none; cursor: pointer; padding: 10px 14px; border-radius: 14px; font-weight: 600;
+      background: var(--accent); color: white; box-shadow: 0 6px 24px color-mix(in oklab, var(--accent), black 80% / 12%);
+      transition: transform .06s ease, box-shadow .2s ease, background .2s ease;
+    }
+    button.secondary { background: var(--muted); color: #111; }
+    button:hover { transform: translateY(-1px); }
+    main { padding: 0 clamp(16px, 3vw, 32px) clamp(24px, 4vw, 48px); }
+    .grid {
+      display: grid; gap: clamp(12px, 2vw, 18px);
+      grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
+    }
+    .card {
+      background: var(--card); border-radius: 18px; padding: 16px; box-shadow: 0 6px 28px rgba(0,0,0,.08);
+      border: 1px solid color-mix(in oklab, var(--accent), #000 95% / 8%);
+    }
+    .card h3 { margin: 0 0 8px; font-size: 18px; }
+    .muted { opacity: .75; }
+    .chip { display: inline-block; padding: 6px 10px; border-radius: 999px; background: color-mix(in oklab, var(--accent), white 78%); color: #111; font-weight: 600; font-size: 12px; }
+    .quote { font-size: clamp(18px, 2.5vw, 22px); line-height: 1.6; }
+    .emoji-wall { font-size: clamp(20px, 4.5vw, 40px); line-height: 1.2; }
+    footer { text-align: center; padding: 28px; opacity: .6; }
+    .kbd { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size: 12px; background: #111; color: #fff; padding: 3px 7px; border-radius: 6px; }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="title">
+      <h1 id="headline">Halaman Random</h1>
+      <span class="chip" id="chip">Fresh</span>
+      <span class="date" id="date"></span>
+    </div>
+    <div class="actions">
+      <button id="btnRandom">Acak Semua ✨</button>
+      <button class="secondary" id="btnShuffle">Acak Kartu 🔀</button>
+      <button class="secondary" id="btnDownload" title="Unduh file HTML ini">Unduh HTML ⤓</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="card" id="quoteCard">
+      <h3>Quote Hari Ini</h3>
+      <p class="quote" id="quoteText">…</p>
+      <p class="muted" id="quoteBy"></p>
+    </section>
+
+    <div class="grid" id="cards"></div>
+
+    <section class="card">
+      <h3>Pola Emoji</h3>
+      <div class="emoji-wall" id="emojiWall">🌈✨🎲</div>
+      <p class="muted">Tekan <span class="kbd">A</span> untuk acak cepat, <span class="kbd">S</span> untuk acak kartu.</p>
+    </section>
+  </main>
+
+  <footer>Made with ♥ · Dibuat acak di sisi klien · Tidak butuh server</footer>
+
+  <script>
+    const nouns = ["Halaman", "Proyek", "Eksperimen", "Ide", "Sketsa", "Kanvas", "Notebook", "Galaksi", "Dimensi", "Playlist"];
+    const adjectives = ["Random", "Aneh", "Unik", "Cepat", "Nyeleneh", "Elegan", "Santai", "Minimalis", "Futuristik", "Eksotis"];
+    const tags = ["#javascript", "#html", "#css", "#random", "#indonesia", "#today", "#fun", "#design", "#dev", "#creative"];
+    const quotes = [
+      ["Keberuntungan adalah ketika persiapan bertemu kesempatan.", "Seneca"],
+      ["Sederhana itu sulit, rumit itu mudah.", "Anonymous"],
+      ["Kemajuan terjadi di luar zona nyaman.", "Neil Strauss"],
+      ["Konsistensi mengalahkan motivasi.", "Anon"],
+      ["Belajar paling cepat adalah dengan membuat kesalahan.", "Anon"],
+      ["Jangan menunggu sempurna, mulai saja.", "Anon"]
+    ];
+    const emojis = ["✨", "⚡", "🔥", "🍀", "🎲", "🎯", "🌈", "🌿", "🪄", "💡", "🚀", "🧩", "🎨", "🔮"];
+
+    const $ = sel => document.querySelector(sel);
+    const $$ = sel => Array.from(document.querySelectorAll(sel));
+
+    function randInt(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
+    function sample(arr) { return arr[randInt(0, arr.length - 1)]; }
+    function shuffle(arr) { return [...arr].sort(() => Math.random() - 0.5); }
+
+    function randomColor() {
+      const h = randInt(0, 359);
+      const s = randInt(55, 95);
+      const l = randInt(45, 65);
+      return `hsl(${h} ${s}% ${l}%)`;
+    }
+
+    function setTheme() {
+      const accent = randomColor();
+      document.documentElement.style.setProperty('--accent', accent);
+      document.documentElement.style.setProperty('--gx', `${randInt(20, 80)}%`);
+      document.documentElement.style.setProperty('--gy', `${randInt(10, 70)}%`);
+    }
+
+    function setHeadline() {
+      const n = sample(nouns);
+      const a = sample(adjectives);
+      $('#headline').textContent = `${n} ${a}`;
+      $('#chip').textContent = sample(tags);
+    }
+
+    function setDate() {
+      const now = new Date();
+      const opts = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      $('#date').textContent = '· ' + now.toLocaleDateString('id-ID', opts);
+    }
+
+    function setQuote() {
+      const [text, by] = sample(quotes);
+      $('#quoteText').textContent = '“' + text + '”';
+      $('#quoteBy').textContent = '— ' + by;
+    }
+
+    function makeCard(i) {
+      const el = document.createElement('article');
+      el.className = 'card';
+      const title = `${sample(["Catatan", "Kartu", "Widget", "Blok", "Panel"]) } #${i+1}`;
+      const desc = shuffle(["Lorem ipsum dolor sit amet, consectetur adipiscing elit.", "Dibuat otomatis dengan JavaScript.", "Klik tombol untuk mengacak.", "Desain responsif dan ringan.", "Tidak menyimpan data pribadi.", "Cocok untuk boilerplate."]).slice(0, randInt(2, 4)).join(' ');
+      el.innerHTML = `
+        <h3>${title}</h3>
+        <p class="muted">${desc}</p>
+        <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:8px;">
+          ${shuffle(tags).slice(0, randInt(2,4)).map(t => `<span class="chip">${t}</span>`).join('')}
+        </div>
+      `;
+      return el;
+    }
+
+    function buildCards() {
+      const wrap = $('#cards');
+      wrap.innerHTML = '';
+      const count = randInt(6, 10);
+      for (let i = 0; i < count; i++) wrap.appendChild(makeCard(i));
+    }
+
+    function setEmojiWall() {
+      const rows = randInt(3, 6);
+      const cols = randInt(8, 14);
+      let out = '';
+      for (let r = 0; r < rows; r++) {
+        const line = Array.from({length: cols}, () => sample(emojis)).join(' ');
+        out += line + (r < rows-1 ? "\n" : "");
+      }
+      $('#emojiWall').textContent = out;
+    }
+
+    function downloadSelf() {
+      const html = '<!doctype html>\n' + document.documentElement.outerHTML;
+      const blob = new Blob([html], { type: 'text/html' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'halaman-random.html';
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    }
+
+    function randomizeAll() {
+      setTheme(); setHeadline(); setQuote(); buildCards(); setEmojiWall();
+    }
+
+    // Events
+    $('#btnRandom').addEventListener('click', randomizeAll);
+    $('#btnShuffle').addEventListener('click', () => { buildCards(); setEmojiWall(); });
+    $('#btnDownload').addEventListener('click', downloadSelf);
+    document.addEventListener('keydown', (e) => {
+      if (e.key.toLowerCase() === 'a') randomizeAll();
+      if (e.key.toLowerCase() === 's') { buildCards(); setEmojiWall(); }
+    });
+
+    // init
+    setDate(); randomizeAll();
+  </script>
+</body>
+</html>
