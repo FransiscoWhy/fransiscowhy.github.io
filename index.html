@@ -1,306 +1,64 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Portofolio – Nama Anda</title>
-  <meta name="description" content="Template portofolio satu file: hero, tentang, skill, proyek, pengalaman, kontak." />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <meta name="theme-color" content="#0ea5e9" />
+  <title>Portofolio — Fransisco Wahyu Syahbani</title>
+  <meta name="description" content="Portofolio pribadi Fransisco Wahyu Syahbani — Data Mining, NLP, Sentiment Analysis (LSTM/BERT), dan Web Development." />
+  <meta property="og:title" content="Portofolio — Fransisco Wahyu Syahbani" />
+  <meta property="og:description" content="Proyek, keahlian, dan kontak." />
+  <meta property="og:type" content="website" />
   <style>
-    :root {
-      --bg: hsl(220 25% 98%);
-      --fg: hsl(220 20% 12%);
-      --muted: hsl(220 20% 35% / .7);
-      --card: #fff;
-      --acc: hsl(255 85% 60%);
-      --ring: hsl(255 85% 60% / .25);
+    /* ===== Variabel & Reset ===== */
+    :root{
+      --bg: #0b1020;
+      --surface: #11162a;
+      --muted: #6b7280;
+      --text: #e5e7eb;
+      --brand: #0ea5e9;
+      --brand-2: #22d3ee;
+      --ring: #1f2937;
+      --card: #0f172a;
+      --ok: #10b981;
+      --warn: #f59e0b;
+      --err: #ef4444;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
     }
-    [data-theme="dark"] {
-      --bg: hsl(222 15% 10%);
-      --fg: hsl(0 0% 96%);
-      --muted: hsl(220 20% 80% / .7);
-      --card: hsl(222 15% 14%);
-      --acc: hsl(200 90% 60%);
-      --ring: hsl(200 90% 60% / .25);
-    }
-    * { box-sizing: border-box; }
-    html, body { height: 100%; }
-    body {
-      margin: 0; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Helvetica Neue", sans-serif;
-      color: var(--fg); background: var(--bg);
-    }
-    a { color: inherit; text-decoration: none; }
-    img { max-width: 100%; display: block; }
-    .container { width: min(1100px, 92%); margin-inline: auto; }
-    .nav {
-      position: sticky; top: 0; z-index: 20; backdrop-filter: blur(8px);
-      background: color-mix(in oklab, var(--bg), transparent 10%);
-      border-bottom: 1px solid color-mix(in oklab, var(--fg), #000 95% / 10%);
-    }
-    .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; }
-    .brand { font-weight: 800; letter-spacing: -0.02em; }
-    .menu { display: flex; gap: clamp(8px, 3vw, 18px); }
-    .menu a { opacity: .85; }
-    .btn {
-      display: inline-flex; align-items: center; gap: 8px; border: 1px solid color-mix(in oklab, var(--acc), #000 90% / 35%);
-      background: var(--acc); color: #fff; padding: 10px 14px; border-radius: 12px; font-weight: 700;
-      box-shadow: 0 8px 24px var(--ring);
-    }
-    .btn.ghost { background: transparent; color: var(--fg); border-color: color-mix(in oklab, var(--fg), #000 95% / 20%); box-shadow: none; }
-    .hero {
-      display: grid; grid-template-columns: 1.2fr .8fr; gap: 28px; align-items: center; padding: 48px 0 24px;
-    }
-    .title { font-size: clamp(28px, 5vw, 56px); letter-spacing: -0.03em; margin: 0 0 12px; }
-    .lead { font-size: clamp(16px, 2.2vw, 20px); color: var(--muted); margin: 0 0 18px; }
-    .badge { display:inline-block; padding:6px 10px; border-radius:999px; background: color-mix(in oklab, var(--acc), white 82%); color:#111; font-weight:700; font-size:12px; }
-    .avatar {
-      border-radius: 18px; overflow: hidden; aspect-ratio: 1/1; border: 1px solid color-mix(in oklab, var(--fg), #000 95% / 10%);
-    }
-    .grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
-    .section { padding: 32px 0; }
-    .section h2 { margin: 0 0 12px; font-size: clamp(22px, 3.2vw, 28px); }
-    .muted { color: var(--muted); }
-    .card { background: var(--card); border: 1px solid color-mix(in oklab, var(--fg), #000 95% / 10%); border-radius: 16px; padding: 16px; }
-    .skill { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-    .meter { width: 52%; height: 10px; background: color-mix(in oklab, var(--fg), #000 95% / 10%); border-radius: 999px; overflow: hidden; }
-    .meter > i { display:block; height: 100%; background: var(--acc); width: 70%; }
-    .tags { display:flex; gap:8px; flex-wrap:wrap; }
-    .tag { font: 600 12px/1 Inter, sans-serif; padding: 6px 10px; border-radius: 999px; background: color-mix(in oklab, var(--acc), white 80%); color:#111; }
-    .proj { display:flex; flex-direction: column; gap:10px; }
-    .proj .thumb { border-radius: 12px; aspect-ratio: 16/10; background: linear-gradient(135deg, var(--acc), transparent),
-                   linear-gradient(180deg, color-mix(in oklab, var(--bg), #000 92% / 8%), var(--card)); border: 1px solid color-mix(in oklab, var(--fg), #000 95% / 12%); }
-    .proj h3 { margin: 0; font-size: 18px; }
-    .proj p { margin: 0; color: var(--muted); }
-    .timeline { position: relative; }
-    .timeline::before { content:""; position:absolute; left: 10px; top: 0; bottom: 0; width: 2px; background: color-mix(in oklab, var(--fg), #000 95% / 15%); }
-    .tl-item { position: relative; padding-left: 28px; margin-bottom: 16px; }
-    .tl-item::before { content:""; position:absolute; left: 4px; top: 6px; width: 14px; height: 14px; border-radius: 999px; background: var(--acc); box-shadow: 0 0 0 4px var(--ring); }
-    .contact { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-    .field { display:flex; flex-direction:column; gap:8px; }
-    input, textarea { border-radius: 12px; border: 1px solid color-mix(in oklab, var(--fg), #000 95% / 18%); background: var(--card); color: var(--fg); padding: 12px 14px; font: 400 14px/1.5 Inter, sans-serif; }
-    textarea { min-height: 120px; }
-    .footer { text-align:center; padding: 28px 0; color: var(--muted); font-size: 14px; }
-    .row { display:flex; gap:10px; align-items:center; flex-wrap: wrap; }
-    .mono { font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; }
-    .sp { display:flex; gap:8px; align-items:center; }
-    .sp a { display:grid; place-items:center; width:36px; height:36px; border-radius:9px; border:1px solid color-mix(in oklab, var(--fg), #000 95% / 16%); }
-
-    @media (max-width: 840px) {
-      .hero { grid-template-columns: 1fr; }
-      .contact { grid-template-columns: 1fr; }
-    }
-  </style>
-</head>
-<body>
-  <nav class="nav">
-    <div class="container nav-inner">
-      <div class="row">
-        <span class="brand">Nama Anda</span>
-        <span class="badge mono" id="role">Frontend · 2025</span>
-      </div>
-      <div class="row">
-        <div class="menu mono">
-          <a href="#about">Tentang</a>
-          <a href="#skills">Skill</a>
-          <a href="#projects">Proyek</a>
-          <a href="#experience">Pengalaman</a>
-          <a href="#contact">Kontak</a>
-        </div>
-        <button id="themeBtn" class="btn ghost" title="Ganti tema">🌓</button>
-      </div>
-    </div>
-  </nav>
-
-  <header class="container hero">
-    <div>
-      <h1 class="title">Halo, saya <span style="color:var(--acc)">Nama Anda</span> 👋</h1>
-      <p class="lead">Saya seorang <strong>Frontend Developer</strong> yang hobi membangun antarmuka web cepat, bersih, dan accessible. Saya suka Typescript, React, dan CSS modern.</p>
-      <div class="row" style="margin:18px 0 22px;">
-        <a class="btn" href="#projects">Lihat Proyek</a>
-        <a class="btn ghost" href="./CV_NamaAnda.pdf" download>Unduh CV</a>
-        <div class="sp" aria-label="Sosial">
-          <a href="https://github.com/username" aria-label="GitHub">🐙</a>
-          <a href="https://www.linkedin.com/in/username" aria-label="LinkedIn">in</a>
-          <a href="mailto:email@contoh.com" aria-label="Email">✉️</a>
-        </div>
-      </div>
-      <p class="mono">📍 Kota, Indonesia · ✉️ email@contoh.com · 🔗 www.domainanda.com</p>
-    </div>
-    <div class="avatar">
-      <!-- Ganti src dengan foto Anda -->
-      <img src="https://images.unsplash.com/photo-1527980965255-d3b416303d12?q=80&w=800&auto=format&fit=crop" alt="Foto profil" />
-    </div>
-  </header>
-
-  <section id="about" class="section container">
-    <h2>Tentang</h2>
-    <p class="muted">Saya memiliki ketertarikan pada desain sistem, aksesibilitas, dan developer experience. Di waktu luang saya membuat komponen open-source, menulis catatan teknis, dan bereksperimen dengan animasi mikro yang menyenangkan.</p>
-  </section>
-
-  <section id="skills" class="section container">
-    <h2>Skill</h2>
-    <div class="grid">
-      <div class="card skill"><strong>JavaScript/TypeScript</strong><span class="meter"><i style="width:88%"></i></span></div>
-      <div class="card skill"><strong>React</strong><span class="meter"><i style="width:84%"></i></span></div>
-      <div class="card skill"><strong>CSS (Flex/Grid)</strong><span class="meter"><i style="width:86%"></i></span></div>
-      <div class="card skill"><strong>Node/Express</strong><span class="meter"><i style="width:70%"></i></span></div>
-      <div class="card skill"><strong>Testing</strong><span class="meter"><i style="width:65%"></i></span></div>
-      <div class="card skill"><strong>UI/UX</strong><span class="meter"><i style="width:72%"></i></span></div>
-    </div>
-    <p class="mono" style="margin-top:10px">Teknologi: <span class="tags">
-      <span class="tag">React</span><span class="tag">Next.js</span><span class="tag">Tailwind</span><span class="tag">Vite</span><span class="tag">Framer Motion</span><span class="tag">REST</span><span class="tag">GraphQL</span>
-    </span></p>
-  </section>
-
-  <section id="projects" class="section container">
-    <h2>Proyek</h2>
-    <div class="grid" id="projectGrid">
-      <!-- Proyek 1 -->
-      <article class="card proj" data-tags="react ui">
-        <div class="thumb"></div>
-        <h3>UI Component Kit</h3>
-        <p>Perpustakaan komponen ringan untuk dashboard enterprise. Fokus pada aksesibilitas dan theming.</p>
-        <div class="tags"><span class="tag">React</span><span class="tag">TypeScript</span><span class="tag">Storybook</span></div>
-        <div class="row">
-          <a class="btn" href="#">Demo</a>
-          <a class="btn ghost" href="#">Kode</a>
-        </div>
-      </article>
-      <!-- Proyek 2 -->
-      <article class="card proj" data-tags="nextjs ai">
-        <div class="thumb"></div>
-        <h3>AI Notes</h3>
-        <p>Aplikasi catatan dengan pencarian semantik dan ringkas otomatis. Deploy di Vercel.</p>
-        <div class="tags"><span class="tag">Next.js</span><span class="tag">Embeddings</span><span class="tag">Vercel</span></div>
-        <div class="row">
-          <a class="btn" href="#">Demo</a>
-          <a class="btn ghost" href="#">Kode</a>
-        </div>
-      </article>
-      <!-- Proyek 3 -->
-      <article class="card proj" data-tags="python data">
-        <div class="thumb"></div>
-        <h3>Data Viz Toolkit</h3>
-        <p>Toolkit visualisasi data untuk tim riset internal, dengan preset chart dan dokumentasi.</p>
-        <div class="tags"><span class="tag">Python</span><span class="tag">Pandas</span><span class="tag">D3</span></div>
-        <div class="row">
-          <a class="btn" href="#">Demo</a>
-          <a class="btn ghost" href="#">Kode</a>
-        </div>
-      </article>
-    </div>
-    <div class="row" style="margin-top:10px">
-      <span class="mono">Filter:</span>
-      <div class="tags" id="filters">
-        <button class="tag" data-filter="all">Semua</button>
-        <button class="tag" data-filter="react">React</button>
-        <button class="tag" data-filter="nextjs">Next.js</button>
-        <button class="tag" data-filter="python">Python</button>
-        <button class="tag" data-filter="ai">AI</button>
-        <button class="tag" data-filter="data">Data</button>
-      </div>
-    </div>
-  </section>
-
-  <section id="experience" class="section container">
-    <h2>Pengalaman</h2>
-    <div class="timeline">
-      <div class="tl-item">
-        <div class="row" style="justify-content: space-between;">
-          <strong>Frontend Engineer – PT Contoh Teknologi</strong>
-          <span class="mono">2023 – Sekarang</span>
-        </div>
-        <p class="muted">Mendesain ulang design system, menurunkan bundle 32% dan mempercepat TTI 28%.</p>
-      </div>
-      <div class="tl-item">
-        <div class="row" style="justify-content: space-between;">
-          <strong>UI Developer – Studio Kreatif</strong>
-          <span class="mono">2021 – 2023</span>
-        </div>
-        <p class="muted">Membangun 20+ landing page performa tinggi dan A/B testing komponen utama.</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="contact" class="section container">
-    <h2>Kontak</h2>
-    <form class="card contact" onsubmit="event.preventDefault(); alert('Terima kasih! Pesan terkirim (simulasi).');">
-      <div class="field">
-        <label>Nama</label>
-        <input required placeholder="Nama lengkap" />
-      </div>
-      <div class="field">
-        <label>Email</label>
-        <input type="email" required placeholder="alamat@email.com" />
-      </div>
-      <div class="field" style="grid-column:1/-1">
-        <label>Pesan</label>
-        <textarea required placeholder="Tulis pesan Anda…"></textarea>
-      </div>
-      <div style="grid-column:1/-1; display:flex; gap:10px; justify-content:flex-end;">
-        <button class="btn ghost" type="reset">Reset</button>
-        <button class="btn" type="submit">Kirim</button>
-      </div>
-    </form>
-  </section>
-
-  <footer class="footer container">
-    © <span id="year"></span> Nama Anda · Dibangun dengan HTML/CSS/JS · 💙
-  </footer>
-
-  <script>
-    // Tema
-    const themeBtn = document.getElementById('themeBtn');
-    const root = document.documentElement;
-    const saved = localStorage.getItem('theme');
-    if (saved) document.body.setAttribute('data-theme', saved);
-    themeBtn.addEventListener('click', () => {
-      const cur = document.body.getAttribute('data-theme');
-      const next = cur === 'dark' ? '' : 'dark';
-      if (next) document.body.setAttribute('data-theme', next); else document.body.removeAttribute('data-theme');
-      localStorage.setItem('theme', next);
-    });
-
-    // Tahun footer
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    // Filter proyek sederhana
-    const filters = document.getElementById('filters');
-    const items = Array.from(document.querySelectorAll('#projectGrid .proj'));
-    filters.addEventListener('click', (e) => {
-      if (!(e.target instanceof HTMLElement)) return;
-      const f = e.target.dataset.filter; if (!f) return;
-      items.forEach(it => {
-        if (f === 'all') { it.style.display = ''; return; }
-        const tags = (it.getAttribute('data-tags') || '').split(/\s+/);
-        it.style.display = tags.includes(f) ? '' : 'none';
-      });
-    });
-
-    // Helper: ganti placeholder cepat (opsional)
-    // Ubah nilai di bawah untuk mempersonalisasi cepat.
-    const PROFILE = {
-      name: 'Nama Anda',
-      role: 'Frontend Developer',
-      city: 'Kota, Indonesia',
-      email: 'email@contoh.com',
-      site: 'www.domainanda.com',
-      socials: {
-        github: 'https://github.com/username',
-        linkedin: 'https://www.linkedin.com/in/username',
-        email: 'mailto:email@contoh.com'
+    @media (prefers-color-scheme: light){
+      :root{
+        --bg: #fafafa;
+        --surface: #ffffff;
+        --text: #0f172a;
+        --muted: #4b5563;
+        --card: #ffffff;
+        --ring: #e5e7eb;
+        --shadow: 0 10px 25px rgba(2,6,23,.08);
       }
-    };
-    document.title = `Portofolio – ${PROFILE.name}`;
-    document.querySelector('.brand').textContent = PROFILE.name;
-    document.getElementById('role').textContent = `${PROFILE.role} · ${new Date().getFullYear()}`;
-    document.querySelector('header .title').innerHTML = `Halo, saya <span style="color:var(--acc)">${PROFILE.name}</span> 👋`;
-    document.querySelector('header .mono').textContent = `📍 ${PROFILE.city} · ✉️ ${PROFILE.email} · 🔗 ${PROFILE.site}`;
-    document.querySelector('.sp a[aria-label="GitHub"]').href = PROFILE.socials.github;
-    document.querySelector('.sp a[aria-label="LinkedIn"]').href = PROFILE.socials.linkedin;
-    document.querySelector('.sp a[aria-label="Email"]').href = PROFILE.socials.email;
-  </script>
-</body>
-</html>
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, "Helvetica Neue", Arial, "Apple Color Emoji","Segoe UI Emoji";
+      background: radial-gradient(1200px 800px at 80% -10%, rgba(14,165,233,.18), transparent 60%),
+                  radial-gradient(1000px 600px at 0% 0%, rgba(34,211,238,.12), transparent 50%),
+                  var(--bg);
+      color:var(--text);
+    }
+    a{color:inherit; text-decoration:none}
+    img{max-width:100%; display:block}
+    /* ===== Layout ===== */
+    .container{max-width:1100px; margin-inline:auto; padding:0 1.2rem}
+    .nav{
+      position:sticky; top:0; z-index:50; backdrop-filter:saturate(160%) blur(10px);
+      background: color-mix(in oklab, var(--bg) 80%, transparent);
+      border-bottom:1px solid var(--ring); box-shadow: var(--shadow);
+    }
+    .nav-inner{display:flex; align-items:center; justify-content:space-between; gap:.75rem; padding:.8rem 0}
+    .brand{display:flex; align-items:center; gap:.6rem; font-weight:700}
+    .brand .logo{width:28px; height:28px; display:grid; place-items:center; border-radius:8px; background:linear-gradient(135deg,var(--brand),var(--brand-2)); box-shadow:0 6px 16px rgba(14,165,233,.4)}
+    .brand span{letter-spacing:.3px}
+    .nav a.link{padding:.5rem .8rem; border-radius:10px; color:var(--muted)}
+    .nav a.link:hover{background:var(--ring); color:var(--text)}
+    .actions{display:flex; align-items:center; gap:.5rem}
+    .btn{display:inline-flex; align-items:center; gap:.5rem; padding:.7rem 1rem; border-radius:12px; border:1px solid var(--ring); background:var(--surface); box
